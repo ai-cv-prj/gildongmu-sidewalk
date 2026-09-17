@@ -1,0 +1,30 @@
+# file_path: configs/mask2former_surface1.yaml
+# 데이터로 Mask2Former를 파인튜닝할 때 사용하는 설정.
+
+paths:
+  data_dir: data/raw/Surface_1 # 사용할 데이터
+  output_root: outputs/run     # 결과 저장
+
+model:
+  name: facebook/mask2former-swin-large-mapillary-vistas-semantic # 사용할 모델
+
+labels:
+  walkable: # 횡단보도를 제외한 보행 가능 영역
+    sidewalk: [blocks, asphalt, cement, urethane, soil_stone, damaged]
+    braille_guide_blocks: [normal, damaged]
+    caution_zone: [manhole, grating, tree_zone, stairs]
+  crosswalk: # 차도와 골목의 횡단보도
+    roadway: [crosswalk]
+    alley: [crosswalk]
+  id_to_label:
+    0: non_walkable
+    1: walkable
+    2: crosswalk
+
+training:
+  image_size: 384         
+  batch_size: 4           
+  epochs: 100
+  early_stopping_patience: 3
+  learning_rate: 0.00001
+  seed: 42
